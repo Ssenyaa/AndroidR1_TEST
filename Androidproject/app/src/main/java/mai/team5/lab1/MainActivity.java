@@ -14,8 +14,9 @@ public class MainActivity extends AppCompatActivity {
     private Button checkButton;
     private int secretNumber;
     private int attempts;
-    Boolean isNew = true;
-    private TextView randomTextView;
+    private TextView secretNumberTextView;
+
+    private String result = "";
 
 
 
@@ -23,41 +24,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         onenum = findViewById(R.id.onenum);
         resultTextView = findViewById(R.id.resultTextView);
         checkButton = findViewById(R.id.checkButton);
 
-        randomTextView = findViewById(R.id.randomTextView);
-        int randomNumber = generateRandomNumber(1000, 9999);
-        randomTextView.setText(String.valueOf(randomNumber));
 
-        secretNumber = generateRandomNumber(1000, 9999);
+        secretNumberTextView = findViewById(R.id.randomTextView);
+        int secretNumber = generateRandomNumber();
+        secretNumberTextView.setText(Integer.toString(secretNumber));
+
         attempts = 0;
         checkButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 String guessString = onenum.getText().toString();
-                int guess = Integer.parseInt(guessString);
-                attempts++;
+                onenum.setText("");
+                if ((guessString.length() == 4) & (guessString.charAt(0)!=0)){
+                    int guess = Integer.parseInt(guessString);
+                    attempts++;
+                    int bulls = getBulls(secretNumber, guess);
+                    int cows = getCows(secretNumber, guess);
 
-                int bulls = getBulls(secretNumber, guess);
-                int cows = getCows(secretNumber, guess);
+                    result += "Popitka #" + attempts + ": -" + guess + "- " + bulls + " bick, " + cows + " korovi\n";
 
-                String result = "Popitka #" + attempts + ": " + bulls + " bick, " + cows + " korovi";
+                    if (bulls == 4) {
+                        result += "\nVi ugadali!\n";
+                    }
+                    if (attempts == 5) {
+                        result += "\nVi proigrali!!!\n";
+                    }
 
-                if (bulls == 4) {
-                    result += "\nVi ugadali!";
+                    resultTextView.setText(result);
                 }
-
-                resultTextView.setText(result);
             }
         });
     }
     public void clickNumber(View view) {
-        if(isNew)
-            onenum.setText("");
-        isNew=false;
         String number = onenum.getText().toString();
         if (view.getId() == R.id.cn0) {
             number = number + "0";
@@ -113,12 +117,16 @@ public class MainActivity extends AppCompatActivity {
         return cows;
     }
 
-    private int generateRandomNumber(int min, int max) {
-        return (int) (Math.random() * (max - min + 1)) + min;
+    private int generateRandomNumber() {
+        String number = "";
+        do{
+            number = Integer.toString((int) (Math.random() * 10000));
+        }while ((number.charAt(0) == number.charAt(1)) | (number.charAt(0) == number.charAt(2)) | (number.charAt(0) == number.charAt(3)) |
+                (number.charAt(1) == number.charAt(2)) | (number.charAt(1) == number.charAt(2)) | (number.charAt(2) == number.charAt(3)));
+        return Integer.parseInt(number);
     }
     public void clickObnulenie(View view) {
         onenum.setText("");
-        isNew = true;
     }
 }
 
