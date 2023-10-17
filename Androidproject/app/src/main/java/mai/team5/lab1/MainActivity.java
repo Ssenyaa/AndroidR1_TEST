@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         return Integer.parseInt(number);
     }
     public void clickObnulenie(View view) {
+        number = "";
         onenum.setText("");
         for (int i=0; i<4; i++){
             button[i].setEnabled(true);

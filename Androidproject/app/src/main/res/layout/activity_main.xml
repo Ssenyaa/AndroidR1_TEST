@@ -10,11 +10,11 @@
         android:id="@+id/cn7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="468dp"
-        android:layout_marginEnd="262dp"
         android:onClick="clickNumber"
         android:text="7"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="468dp"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="158dp"
         android:onClick="clickNumber"
         android:text="8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
         android:id="@+id/buAC"
         android:layout_width="111dp"
         android:layout_height="62dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="404dp"
         android:layout_weight="1"
         android:onClick="clickObnulenie"
@@ -55,11 +55,11 @@
         android:id="@+id/cn4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="520dp"
-        android:layout_marginEnd="262dp"
         android:onClick="clickNumber"
         android:text="4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="520dp"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="158dp"
         android:onClick="clickNumber"
         android:text="5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,11 +88,11 @@
         android:id="@+id/cn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="572dp"
-        android:layout_marginEnd="262dp"
         android:onClick="clickNumber"
         android:text="1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -100,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="572dp"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="158dp"
         android:onClick="clickNumber"
         android:text="2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="416dp"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="158dp"
         android:onClick="clickNumber"
         android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
