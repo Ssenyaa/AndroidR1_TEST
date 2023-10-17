@@ -151,6 +151,16 @@ public class MainActivity extends AppCompatActivity {
             button[i].setEnabled(true);
         }
     }
+    public void restart(View view) {
+        resultTextView.setText("");
+        result = "";
+        number = "";
+        onenum.setText("");
+        secretNumber = generateRandomNumber();
+        secretNumberTextView = findViewById(R.id.randomTextView);
+        secretNumberTextView.setText(Integer.toString(secretNumber));
+        attempts = 0;
+    }
 }
 
 
