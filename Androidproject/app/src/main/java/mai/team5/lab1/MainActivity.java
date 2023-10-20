@@ -73,11 +73,24 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < 4; i++) {
                             button[i].setEnabled(true);
                         }
-                    } else {
+
+                    }
+
+                    else {
+                        for (int i=0; i<4; i++){
+                            button[i].setEnabled(true);
+                        }
+                        number = "";
+                        onenum.setText("");
                         resultTextView.setText("ЧИСЛО НЕ ДОЛЖНО НАЧИНАТЬСЯ С НУЛЯ");
                     }
                 }
                 else{
+                    for (int i=0; i<4; i++){
+                        button[i].setEnabled(true);
+                    }
+                    number = "";
+                    onenum.setText("");
                     resultTextView.setText("ЧИСЛО ДОЛЖНО БЫТЬ ЧЕТЫРЕХЗНАЧНЫМ");
                 }
 
