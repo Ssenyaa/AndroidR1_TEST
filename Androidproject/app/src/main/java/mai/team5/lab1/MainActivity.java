@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,19 +41,21 @@ public class MainActivity extends AppCompatActivity {
         buAC = findViewById(R.id.buAC);
 
 
+
         secretNumberTextView = findViewById(R.id.randomTextView);
-        int secretNumber = generateRandomNumber();
+        secretNumber = generateRandomNumber();
         secretNumberTextView.setText(Integer.toString(secretNumber));
         start.setEnabled(false);
         buAC.setEnabled(false);
-
+        checkButton.setEnabled(false);
         attempts = 0;
+
         checkButton.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View view) {
                 onenum.setText("");
-
                 if ((number.length() == 4)) {
                     if (number.charAt(0) != '0') {
                         attempts++;
@@ -62,11 +67,14 @@ public class MainActivity extends AppCompatActivity {
                         if (bulls == 4) {
                             result += "\nVi ugadali!\n";
                             start.setEnabled(true);
+                            checkButton.setEnabled(false);
                         }
                         if (attempts == 5) {
                             result += "\nVi proigrali!!!\n";
                             start.setEnabled(true);
+                            checkButton.setEnabled(false);
                         }
+
 
                         resultTextView.setText(result);
 
@@ -100,7 +108,14 @@ public class MainActivity extends AppCompatActivity {
     }
     public void clickNumber(View view) {
         int l = number.length();
+        if (l == 0){
+            checkButton.setEnabled(false);
+        }
+        else {
+            checkButton.setEnabled(true);
+        }
         if (l < 4){
+
             if (view.getId() == R.id.cn0) {
                 number = number + "0";
             } else if (view.getId() == R.id.cn1) {
@@ -128,12 +143,14 @@ public class MainActivity extends AppCompatActivity {
         }
         if (l < 3){
             buAC.setEnabled(false);
+            checkButton.setEnabled(false);
         }
         else {
             buAC.setEnabled(true);
+            checkButton.setEnabled(true);
         }
 
-    };
+    }
     private int getBulls(int secretNumber, String guess) {
         int bulls = 0;
 
@@ -180,20 +197,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void restart(View view) {
-
         resultTextView.setText("");
         result = "";
         number = "";
         onenum.setText("");
-        secretNumber = generateRandomNumber();
-        secretNumberTextView = findViewById(R.id.randomTextView);
-        secretNumberTextView.setText(Integer.toString(secretNumber));
         attempts = 0;
+        secretNumber = generateRandomNumber();
+        secretNumberTextView.setText(Integer.toString(secretNumber));
+        checkButton.setEnabled(false);
         start.setEnabled(false);
-        for (int i=0; i<4; i++){
-            button[i].setEnabled(true);
+        buAC.setEnabled(false);
+        checkButton.setEnabled(false);
+
+
     }
-}}
+}
+
 
 
 
