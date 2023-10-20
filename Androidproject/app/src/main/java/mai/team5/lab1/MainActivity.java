@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private String result = "";
 
     private String number = "";
+    private Button start;
+    private Button buAC;
 
 
 
@@ -32,11 +34,15 @@ public class MainActivity extends AppCompatActivity {
         onenum = findViewById(R.id.onenum);
         resultTextView = findViewById(R.id.resultTextView);
         checkButton = findViewById(R.id.checkButton);
+        start =  findViewById(R.id.start);
+        buAC = findViewById(R.id.buAC);
 
 
         secretNumberTextView = findViewById(R.id.randomTextView);
         int secretNumber = generateRandomNumber();
         secretNumberTextView.setText(Integer.toString(secretNumber));
+        start.setEnabled(false);
+        buAC.setEnabled(false);
 
         attempts = 0;
         checkButton.setOnClickListener(new View.OnClickListener() {
@@ -52,12 +58,14 @@ public class MainActivity extends AppCompatActivity {
                         int cows = getCows(secretNumber, number);
 
                         result += "Popitka #" + attempts + ": -" + number + "- " + bulls + " bick, " + cows + " korovi\n";
-
+                        buAC.setEnabled(false);
                         if (bulls == 4) {
                             result += "\nVi ugadali!\n";
+                            start.setEnabled(true);
                         }
                         if (attempts == 5) {
                             result += "\nVi proigrali!!!\n";
+                            start.setEnabled(true);
                         }
 
                         resultTextView.setText(result);
@@ -105,6 +113,13 @@ public class MainActivity extends AppCompatActivity {
             button[l] = findViewById(view.getId());
             button[l].setEnabled(false);
         }
+        if (l < 3){
+            buAC.setEnabled(false);
+        }
+        else {
+            buAC.setEnabled(true);
+        }
+
     };
     private int getBulls(int secretNumber, String guess) {
         int bulls = 0;
@@ -152,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void restart(View view) {
+
         resultTextView.setText("");
         result = "";
         number = "";
@@ -160,7 +176,11 @@ public class MainActivity extends AppCompatActivity {
         secretNumberTextView = findViewById(R.id.randomTextView);
         secretNumberTextView.setText(Integer.toString(secretNumber));
         attempts = 0;
+        start.setEnabled(false);
+        for (int i=0; i<4; i++){
+            button[i].setEnabled(true);
     }
-}
+}}
+
 
 
