@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private int attempts;
     private TextView secretNumberTextView;
 
-    private final Button[] button = new Button[4];
-
     private String result = "";
 
     private String number = "";
@@ -50,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
         checkButton.setOnClickListener(view -> {
             onenum.setText("");
             if ((number.length() == 4)) {
+                if ((number.charAt(0)!=number.charAt(1))&(number.charAt(1)!=number.charAt(2))&(number.charAt(2)!=number.charAt(3))&(number.charAt(1)!=number.charAt(3))){
                 if (number.charAt(0) != '0') {
                     attempts++;
                     int bulls = getBulls(secretNumber, number);
                     int cows = getCows(secretNumber, number);
-
                     result += "Popitka #" + attempts + ": -" + number + "- " + bulls + " bick, " + cows + " korovi\n";
                     buAC.setEnabled(false);
                     if (bulls == 4) {
@@ -67,34 +65,25 @@ public class MainActivity extends AppCompatActivity {
                         start.setEnabled(true);
                         checkButton.setEnabled(false);
                     }
-
-
                     resultTextView.setText(result);
-
-                    for (int i = 0; i < 4; i++) {
-                        button[i].setEnabled(true);
-                    }
-
                 }
-
-                else {
-                    for (int i=0; i<4; i++){
-                        button[i].setEnabled(true);
-                    }
+                else if (number.charAt(0) == '0') {
                     number = "";
                     onenum.setText("");
                     resultTextView.setText("ЧИСЛО НЕ ДОЛЖНО НАЧИНАТЬСЯ С НУЛЯ");
                 }
             }
-            else{
-                for (int i=0; i<4; i++){
-                    button[i].setEnabled(true);
+            else {
+                    number = "";
+                    onenum.setText("");
+                    resultTextView.setText("ЧИСЛО НЕ ДОЛЖНО СОДЕРЖАТЬ ОДИНАКОВЫЕ ЦИФРЫ");
                 }
+            }
+            else if (number.length() != 4 ){
                 number = "";
                 onenum.setText("");
                 resultTextView.setText("ЧИСЛО ДОЛЖНО БЫТЬ ЧЕТЫРЕХЗНАЧНЫМ");
             }
-
             number = "";
         });
     }
@@ -125,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 number = number + "9";
             }
             onenum.setText(number);
-            button[l] = findViewById(view.getId());
-            button[l].setEnabled(false);
+
         }
         if (l < 3){
             buAC.setEnabled(false);
@@ -174,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isUniqueDigits;
 
         do {
-            number = (int) (Math.random() * 10000);
+            number = (int) (Math.random() * 9000) + 1000;
             isUniqueDigits = checkUniqueDigits(number);
         } while (!isUniqueDigits);
 
@@ -197,12 +185,10 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
     public void clickObnulenie(View view) {
         number = "";
         onenum.setText("");
-        for (int i=0; i<4; i++){
-            button[i].setEnabled(true);
-        }
     }
     @SuppressLint("SetTextI18n")
     public void restart(View view) {
@@ -217,8 +203,6 @@ public class MainActivity extends AppCompatActivity {
         start.setEnabled(false);
         buAC.setEnabled(false);
         checkButton.setEnabled(false);
-
-
     }
 }
 
