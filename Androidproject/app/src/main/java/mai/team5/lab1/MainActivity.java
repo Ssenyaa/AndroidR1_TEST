@@ -1,11 +1,12 @@
 package mai.team5.lab1;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private int attempts;
     private TextView secretNumberTextView;
 
-    private Button[] button = new Button[4];
+    private final Button[] button = new Button[4];
 
     private String result = "";
 
@@ -24,11 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button start;
     private Button buAC;
 
-
-
-
-
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,70 +47,60 @@ public class MainActivity extends AppCompatActivity {
         checkButton.setEnabled(false);
         attempts = 0;
 
-        checkButton.setOnClickListener(new View.OnClickListener() {
+        checkButton.setOnClickListener(view -> {
+            onenum.setText("");
+            if ((number.length() == 4)) {
+                if (number.charAt(0) != '0') {
+                    attempts++;
+                    int bulls = getBulls(secretNumber, number);
+                    int cows = getCows(secretNumber, number);
 
-
-            @Override
-            public void onClick(View view) {
-                onenum.setText("");
-                if ((number.length() == 4)) {
-                    if (number.charAt(0) != '0') {
-                        attempts++;
-                        int bulls = getBulls(secretNumber, number);
-                        int cows = getCows(secretNumber, number);
-
-                        result += "Popitka #" + attempts + ": -" + number + "- " + bulls + " bick, " + cows + " korovi\n";
-                        buAC.setEnabled(false);
-                        if (bulls == 4) {
-                            result += "\nVi ugadali!\n";
-                            start.setEnabled(true);
-                            checkButton.setEnabled(false);
-                        }
-                        if (attempts == 5) {
-                            result += "\nVi proigrali!!!\n";
-                            start.setEnabled(true);
-                            checkButton.setEnabled(false);
-                        }
-
-
-                        resultTextView.setText(result);
-
-                        for (int i = 0; i < 4; i++) {
-                            button[i].setEnabled(true);
-                        }
-
+                    result += "Popitka #" + attempts + ": -" + number + "- " + bulls + " bick, " + cows + " korovi\n";
+                    buAC.setEnabled(false);
+                    if (bulls == 4) {
+                        result += "\nVi ugadali!\n";
+                        start.setEnabled(true);
+                        checkButton.setEnabled(false);
+                    }
+                    if (attempts == 5) {
+                        result += "\nVi proigrali!!!\n";
+                        start.setEnabled(true);
+                        checkButton.setEnabled(false);
                     }
 
-                    else {
-                        for (int i=0; i<4; i++){
-                            button[i].setEnabled(true);
-                        }
-                        number = "";
-                        onenum.setText("");
-                        resultTextView.setText("ЧИСЛО НЕ ДОЛЖНО НАЧИНАТЬСЯ С НУЛЯ");
+
+                    resultTextView.setText(result);
+
+                    for (int i = 0; i < 4; i++) {
+                        button[i].setEnabled(true);
                     }
+
                 }
-                else{
+
+                else {
                     for (int i=0; i<4; i++){
                         button[i].setEnabled(true);
                     }
                     number = "";
                     onenum.setText("");
-                    resultTextView.setText("ЧИСЛО ДОЛЖНО БЫТЬ ЧЕТЫРЕХЗНАЧНЫМ");
+                    resultTextView.setText("ЧИСЛО НЕ ДОЛЖНО НАЧИНАТЬСЯ С НУЛЯ");
                 }
-
-                number = "";
             }
+            else{
+                for (int i=0; i<4; i++){
+                    button[i].setEnabled(true);
+                }
+                number = "";
+                onenum.setText("");
+                resultTextView.setText("ЧИСЛО ДОЛЖНО БЫТЬ ЧЕТЫРЕХЗНАЧНЫМ");
+            }
+
+            number = "";
         });
     }
     public void clickNumber(View view) {
         int l = number.length();
-        if (l == 0){
-            checkButton.setEnabled(false);
-        }
-        else {
-            checkButton.setEnabled(true);
-        }
+        checkButton.setEnabled(l != 0);
         if (l < 4){
 
             if (view.getId() == R.id.cn0) {
@@ -150,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             checkButton.setEnabled(true);
         }
 
+
     }
     private int getBulls(int secretNumber, String guess) {
         int bulls = 0;
@@ -182,12 +170,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int generateRandomNumber() {
-        String number = "";
-        do{
-            number = Integer.toString((int) (Math.random() * 10000));
-        }while ((number.charAt(0) == number.charAt(1)) | (number.charAt(0) == number.charAt(2)) | (number.charAt(0) == number.charAt(3)) |
-                (number.charAt(1) == number.charAt(2)) | (number.charAt(1) == number.charAt(3)) | (number.charAt(2) == number.charAt(3)));
-        return Integer.parseInt(number);
+        int number;
+        boolean isUniqueDigits;
+
+        do {
+            number = (int) (Math.random() * 10000);
+            isUniqueDigits = checkUniqueDigits(number);
+        } while (!isUniqueDigits);
+
+        return number;
+    }
+
+    private boolean checkUniqueDigits(int number) {
+        int[] digits = new int[10];
+
+        while (number > 0) {
+            int digit = number % 10;
+            digits[digit]++;
+
+            if (digits[digit] > 1) {
+                return false;
+            }
+
+            number /= 10;
+        }
+
+        return true;
     }
     public void clickObnulenie(View view) {
         number = "";
@@ -196,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
             button[i].setEnabled(true);
         }
     }
+    @SuppressLint("SetTextI18n")
     public void restart(View view) {
         resultTextView.setText("");
         result = "";
